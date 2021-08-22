@@ -67,10 +67,20 @@
         </div>
 
         <a-divider />
-        <a-button type="primary" style="width:100%;" size="large" @click="quickStart.next()" v-show="quickStart.show.nextButton">
-          {{ quickStart.show.nextButtonText }}
-          <ArrowRightOutlined />
-        </a-button>
+        <a-row>
+          <a-col :span="6">
+            <a-button :disabled="quickStart.show.disabledBackButton" block size="large" @click="quickStart.back()" v-show="quickStart.show.nextButton">
+              <ArrowLeftOutlined />
+            </a-button>
+          </a-col>
+          <!-- <a-col :span="1"></a-col> -->
+          <a-col :span="18">
+            <a-button type="primary" block size="large" @click="quickStart.next()" v-show="quickStart.show.nextButton">
+              {{ quickStart.show.nextButtonText }}
+              <ArrowRightOutlined />
+            </a-button>
+          </a-col>
+        </a-row>
         
       </div>
     </div>
@@ -78,13 +88,15 @@
 </template>
 
 <script>
-import { defineComponent, reactive, ref } from 'vue';
-import { ArrowRightOutlined } from '@ant-design/icons-vue';
+import { defineComponent, reactive, ref, onMounted } from 'vue';
+import { ArrowRightOutlined, ArrowLeftOutlined } from '@ant-design/icons-vue';
 
 export default {
   components: {
-    ArrowRightOutlined
+    ArrowRightOutlined,
+    ArrowLeftOutlined
   },
+  
   setup() {
     const quickStart = reactive({
       progress: 0,
@@ -101,7 +113,8 @@ export default {
         addWork: false,
         result: false,
         nextButton: true,
-        nextButtonText: '下一步'
+        nextButtonText: '下一步',
+        disabledBackButton: true
       },
       addDate: '',
       addWork: {
@@ -121,7 +134,10 @@ export default {
           quickStart.show.result = false
           quickStart.progress += 30
 
+          quickStart.show.disabledBackButton = false
+
           // 逻辑代码
+          console.log(quickStart.addDate)
         }else if ( quickStart.show.date == false && quickStart.show.subject == true && quickStart.show.addWork == false ) {
           // 状态更新
           quickStart.show.date = false
@@ -143,13 +159,35 @@ export default {
 
           // 逻辑代码
         }
+      }),
+
+      back: (()=>{
+        if ( quickStart.show.date == false && quickStart.show.subject == true && quickStart.show.addWork == false ) {
+          // 状态更新
+          quickStart.show.date = true
+          quickStart.show.subject = false
+          quickStart.show.addWork = false
+          quickStart.show.result = false
+          quickStart.progress -= 30
+        }else if ( quickStart.show.date == false && quickStart.show.subject == false && quickStart.show.addWork == true ) {
+          // 状态更新
+          quickStart.show.nextButton = true
+          quickStart.show.date = false
+          quickStart.show.subject = true
+          quickStart.show.addWork = false
+          quickStart.show.result = false
+          quickStart.progress -= 40
+        }
+
       })
     })
     return {
       activeKey: ref('1'),
       quickStart,
     }
-  }
+  },
+  // onMounted() {
+  // },
 }
 </script>
 
