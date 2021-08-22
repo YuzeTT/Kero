@@ -23,10 +23,13 @@
         <div v-show="quickStart.show.date">
           <h2>1. 选择生效日期</h2>
           <a-radio-group v-model:value="quickStart.addDate" style="width: 100%">
-            <a-radio value="a">仅今天</a-radio>
-            <a-radio value="b">自定义</a-radio>
-            <a-radio value="c">自定义范围</a-radio>
+            <a-radio value="now">仅今天</a-radio>
+            <a-radio value="custom">自定义</a-radio>
+            <a-radio value="range">自定义范围</a-radio>
           </a-radio-group>
+          <div style="margin: 20px"></div>
+          <a-date-picker v-model:value="quickStart.date" v-show="quickStart.addDate == 'custom'" />
+          <a-range-picker v-model:value="quickStart.rangeDate" v-show="quickStart.addDate == 'range'" />
         </div>
         <div v-show="quickStart.show.subject">
           <h2>2. 勾选需要发布的科目</h2>
@@ -39,17 +42,38 @@
           </a-checkbox-group>
         </div>
         <div v-show="quickStart.show.addWork">
+          <h2>3. 填写各科作业</h2>
           <a-tabs v-model:activeKey="activeKey">
             <a-tab-pane v-for="(item,key) in quickStart.subject" :key="item" :tab="item">
-              <a-form-item label="名称">
-                <a-input v-model:value="quickStart.addWork.text" />
-              </a-form-item>
-              <a-form-item label="范围">
-                <a-input v-model:value="quickStart.addWork.pages" />
-              </a-form-item>
-              <a-form-item label="备注">
-                <a-input v-model:value="quickStart.addWork.remarks" />
-              </a-form-item>
+              <a-row>
+                <a-col :span="24">
+                  <a-form-item label="名称 ">
+                    <a-input v-model:value="quickStart.addWork.text" />
+                  </a-form-item>
+                </a-col>
+                <a-col :span="24">
+                  <a-form-item label="范围 ">
+                    <a-input v-model:value="quickStart.addWork.pages" />
+                  </a-form-item>
+                </a-col>
+                <a-col :span="24">
+                  <a-form-item label="标签 ">
+                    <a-select
+                      v-model:value="quickStart.addWork.tag"
+                      :options="quickStart.tagOptions"
+                      mode="tags"
+                      placeholder="添加标签"
+                      style="width: 100%"
+                    >
+                    </a-select>
+                  </a-form-item>
+                </a-col>
+                <a-col :span="24">
+                  <a-form-item label="备注 ">
+                    <a-input v-model:value="quickStart.addWork.remarks" />
+                  </a-form-item>
+                </a-col>
+              </a-row>
             </a-tab-pane>
           </a-tabs>
         </div>
@@ -81,7 +105,10 @@
             </a-button>
           </a-col>
         </a-row>
-        
+        <a-button type="primary" block size="large" @click="quickStart.againPush()" v-show="quickStart.show.againPush">
+          再次发布
+          <RollbackOutlined />
+        </a-button>
       </div>
     </div>
   </div>
@@ -89,12 +116,13 @@
 
 <script>
 import { defineComponent, reactive, ref, onMounted } from 'vue';
-import { ArrowRightOutlined, ArrowLeftOutlined } from '@ant-design/icons-vue';
+import { ArrowRightOutlined, ArrowLeftOutlined, RollbackOutlined } from '@ant-design/icons-vue';
 
 export default {
   components: {
     ArrowRightOutlined,
-    ArrowLeftOutlined
+    ArrowLeftOutlined,
+    RollbackOutlined
   },
   
   setup() {
@@ -114,14 +142,19 @@ export default {
         result: false,
         nextButton: true,
         nextButtonText: '下一步',
-        disabledBackButton: true
+        disabledBackButton: true,
+        againPush: false
       },
       addDate: '',
+      tagOptions: [{value:'普通'},{value:'重要'},{value:'惩罚性'}],
+      date: '',
+      rangeDate: [],
       addWork: {
         subject: '',
         text: '',
         pages: '',
-        remarks: ''
+        remarks: '',
+        tag: ['普通']
       },
       next: (()=>{
         console.log('[DEBUG] 下一步')
@@ -135,9 +168,9 @@ export default {
           quickStart.progress += 30
 
           quickStart.show.disabledBackButton = false
-
           // 逻辑代码
           console.log(quickStart.addDate)
+          
         }else if ( quickStart.show.date == false && quickStart.show.subject == true && quickStart.show.addWork == false ) {
           // 状态更新
           quickStart.show.date = false
@@ -146,7 +179,7 @@ export default {
           quickStart.show.result = false
           quickStart.progress += 40
           quickStart.show.nextButtonText = '提交'
-
+          console.log(quickStart.addWork.tag)
           // 逻辑代码
         }else if ( quickStart.show.date == false && quickStart.show.subject == false && quickStart.show.addWork == true ) {
           // 状态更新
@@ -156,7 +189,7 @@ export default {
           quickStart.show.addWork = false
           quickStart.show.result = true
           quickStart.progress += 30
-
+          quickStart.show.againPush = true
           // 逻辑代码
         }
       }),
@@ -169,6 +202,7 @@ export default {
           quickStart.show.addWork = false
           quickStart.show.result = false
           quickStart.progress -= 30
+          quickStart.show.disabledBackButton = true
         }else if ( quickStart.show.date == false && quickStart.show.subject == false && quickStart.show.addWork == true ) {
           // 状态更新
           quickStart.show.nextButton = true
@@ -177,8 +211,13 @@ export default {
           quickStart.show.addWork = false
           quickStart.show.result = false
           quickStart.progress -= 40
+          quickStart.show.nextButtonText = '下一步'
         }
 
+      }),
+
+      againPush: (()=>{
+        location.reload();
       })
     })
     return {

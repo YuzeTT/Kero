@@ -15,6 +15,8 @@ import {
   Input,
   Radio,
   Result,
+  DatePicker,
+  Select
 } from 'ant-design-vue';
 import App from './App.vue'
 import './registerServiceWorker'
@@ -39,5 +41,7 @@ app.use(Form)
 app.use(Input)
 app.use(Radio)
 app.use(Result)
+app.use(DatePicker)
+app.use(Select)
 
 app.mount('#app')
