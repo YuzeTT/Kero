@@ -44,8 +44,8 @@
         <div v-show="quickStart.show.addWork">
           <h2>3. 填写各科作业</h2>
           <a-tabs v-model:activeKey="activeKey">
-            <a-tab-pane v-for="(item,key) in quickStart.subject" :key="item" :tab="item">
-              <a-row>
+            <a-tab-pane v-for="(item,index) in quickStart.subject" :key="index" :tab="item">
+              <!-- <a-row>
                 <a-col :span="24">
                   <a-form-item label="名称 ">
                     <a-input v-model:value="quickStart.addWork.text" />
@@ -73,7 +73,9 @@
                     <a-input v-model:value="quickStart.addWork.remarks" />
                   </a-form-item>
                 </a-col>
-              </a-row>
+              </a-row> -->
+
+              <a-textarea v-model:value="quickStart.workArr[index]" placeholder="Basic usage" :rows="4" />
             </a-tab-pane>
           </a-tabs>
         </div>
@@ -156,11 +158,13 @@ export default {
         remarks: '',
         tag: ['普通']
       },
+      workArr: [],
+      work: [],
       next: (()=>{
         console.log('[DEBUG] 下一步')
         
         if ( quickStart.show.date == true && quickStart.show.subject == false && quickStart.show.addWork == false ) {
-          // 状态更新
+          // --- 状态更新 ---
           quickStart.show.date = false
           quickStart.show.subject = true
           quickStart.show.addWork = false
@@ -168,11 +172,11 @@ export default {
           quickStart.progress += 30
 
           quickStart.show.disabledBackButton = false
-          // 逻辑代码
+          // --- 逻辑代码 ---
           console.log(quickStart.addDate)
           
         }else if ( quickStart.show.date == false && quickStart.show.subject == true && quickStart.show.addWork == false ) {
-          // 状态更新
+          // --- 状态更新 ---
           quickStart.show.date = false
           quickStart.show.subject = false
           quickStart.show.addWork = true
@@ -180,9 +184,9 @@ export default {
           quickStart.progress += 40
           quickStart.show.nextButtonText = '提交'
           console.log(quickStart.addWork.tag)
-          // 逻辑代码
+          // --- 逻辑代码 ---
         }else if ( quickStart.show.date == false && quickStart.show.subject == false && quickStart.show.addWork == true ) {
-          // 状态更新
+          // --- 状态更新 ---
           quickStart.show.nextButton = false
           quickStart.show.date = false
           quickStart.show.subject = false
@@ -190,7 +194,11 @@ export default {
           quickStart.show.result = true
           quickStart.progress += 30
           quickStart.show.againPush = true
-          // 逻辑代码
+          // --- 逻辑代码 ---
+          // 合并科目和作业
+          quickStart.subject.map((item,index) => {
+            quickStart.work.push({name:item,text:quickStart.workArr[index]})
+          })
         }
       }),
 
