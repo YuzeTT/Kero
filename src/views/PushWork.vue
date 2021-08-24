@@ -87,9 +87,22 @@
           >
             <template #extra>
               <a-button key="console" type="primary">查看图片</a-button>
-              <a-button key="buy">保存</a-button>
+              <a-button key="buy" @click="quickStart.createImage()">保存</a-button>
             </template>
           </a-result>
+        </div>
+        
+        <div>
+          <a-result
+            status="success"
+            title="请检查"
+            sub-title="确认无误点击提交"
+          >
+            <template #icon>
+              <smile-twoTone />
+            </template>
+          </a-result>
+          <ExportImage ref="imageDom" style="width:600px;" :date="quickStart.addDate" :works="quickStart.work"></ExportImage>
         </div>
 
         <a-divider />
@@ -117,17 +130,24 @@
 </template>
 
 <script>
-import { defineComponent, reactive, ref, onMounted } from 'vue';
-import { ArrowRightOutlined, ArrowLeftOutlined, RollbackOutlined } from '@ant-design/icons-vue';
+import { defineComponent, reactive, ref, onMounted,h, toRaw } from 'vue';
+import { Modal } from 'ant-design-vue';
+import { ArrowRightOutlined, ArrowLeftOutlined, RollbackOutlined, SmileTwoTone } from '@ant-design/icons-vue';
+import html2canvas from 'html2canvas'
+import ExportImage from '../components/pushWork/ExportImage.vue'
 
 export default {
   components: {
     ArrowRightOutlined,
     ArrowLeftOutlined,
-    RollbackOutlined
+    RollbackOutlined,
+    SmileTwoTone,
+
+    ExportImage
   },
   
   setup() {
+    const imageDom = ref(null)
     const quickStart = reactive({
       progress: 0,
       subject: [],
@@ -183,7 +203,7 @@ export default {
           quickStart.show.result = false
           quickStart.progress += 40
           quickStart.show.nextButtonText = '提交'
-          console.log(quickStart.addWork.tag)
+          // console.log(quickStart.addWork.tag)
           // --- 逻辑代码 ---
         }else if ( quickStart.show.date == false && quickStart.show.subject == false && quickStart.show.addWork == true ) {
           // --- 状态更新 ---
@@ -197,7 +217,7 @@ export default {
           // --- 逻辑代码 ---
           // 合并科目和作业
           quickStart.subject.map((item,index) => {
-            quickStart.work.push({name:item,text:quickStart.workArr[index]})
+              quickStart.work.push({name:item, text:quickStart.workArr[index].split('\n')})
           })
         }
       }),
@@ -226,11 +246,28 @@ export default {
 
       againPush: (()=>{
         location.reload();
-      })
+      }),
+
+      createImage: ()=>{
+        html2canvas(imageDom.value.$el).then(canvas => {
+          let dataURL = canvas.toDataURL("image/png");
+          if (dataURL !== "") {
+            Modal.success({
+              width: 1000,
+              title: '导出成功',
+              content: h('div', {}, [
+                h('p', '长按图片保存'),
+                h('img', {src:imgUrl}),
+              ]),
+            });
+          }
+        });
+      }
     })
     return {
       activeKey: ref('1'),
       quickStart,
+      imageDom
     }
   },
   // onMounted() {
