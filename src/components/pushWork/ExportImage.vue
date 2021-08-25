@@ -2,7 +2,7 @@
   <div class="image">
     <!-- {{ date }}
     {{ work }} -->
-    <div class="header" style="height:80px">
+    <div class="header" style="height:100px">
       <!-- <span class="title">作业</span> -->
       <!-- <div>日期 
         <span style="background-color: black;padding: 0 10px;color:#fff">{{ date }}</span>
@@ -10,8 +10,9 @@
       <a-row style="position: relative;" >
         <a-col :span="12">
           <span class="title">作业</span>
+          <span style="padding-left:15px;font-size:23px;">数量 <span style="background-color: black;color:#fff;padding: 0 5px;">{{ work.totalNum }}</span></span>
           <br>
-          <span style="font-size:15px"><InfoCircleOutlined style="font-size:13px;color:black" /> 可用于热敏打印</span>
+          <span style="font-size:20px"><InfoCircleOutlined style="font-size:18px;color:black" /> 可用于热敏打印</span>
         </a-col>
         <a-col :span="12" style="position: absolute;right: 0;top: 0;">
           <div class="info">
@@ -24,9 +25,9 @@
                 <span>发布者</span>
               </a-col>
               <a-col>
-                <span>21-08-25</span>
+                <span>{{date[0]}}</span>
                 <br>
-                <span>21-08-25</span>
+                <span>{{date[1]}}</span>
                 <br>
                 <span>2517746965</span>
               </a-col>
@@ -64,7 +65,7 @@ import { InfoCircleOutlined } from '@ant-design/icons-vue';
 
 export default {
   props: {
-    date: String,
+    date: Array,
     works: Array
   },
   components: {
@@ -73,8 +74,11 @@ export default {
   setup(props) {
     watch(props,()=>{
       work.total()
+      work.workList = props.works
+      console.log(work.workList)
     })
     const work = reactive({
+      workList: [],
       totalNum: 0,
       total: ()=>{
         props.works.map(item=>{
@@ -123,15 +127,17 @@ td, th{
 }
 
 .title {
-  font-size: 2rem;
+  font-size: 3rem;
   font-weight: 600;
+  line-height: 50px;
 }
 
 .info {
   border: 1px solid black;
-  padding: 0 3px;
+  padding: 0 5px;
   font-weight: 600;
   border-radius: 6px;
+  font-size: 18px;
 }
 
 .tables {

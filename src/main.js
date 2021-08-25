@@ -18,7 +18,8 @@ import {
   DatePicker,
   Select,
   // Textarea,
-  InputNumber
+  InputNumber,
+  Spin
 } from 'ant-design-vue';
 import App from './App.vue'
 import './registerServiceWorker'
@@ -47,5 +48,6 @@ app.use(DatePicker)
 app.use(Select)
 // app.use(Textarea)
 app.use(InputNumber)
+app.use(Spin)
 
 app.mount('#app')

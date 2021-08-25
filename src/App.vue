@@ -12,6 +12,11 @@ html, body {
   margin: 0;
 }
 
+.imageShow {
+  width: 100%;
+  height: auto;
+}
+
 /* #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
