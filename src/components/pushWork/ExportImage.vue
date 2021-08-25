@@ -2,111 +2,73 @@
   <div class="image">
     <!-- {{ date }}
     {{ work }} -->
-    <div class="header">
+    <div class="header" style="height:80px">
       <!-- <span class="title">作业</span> -->
-      <div>日期 
-        <span style="background-color: black;padding: 0 10px;color:#fff">2108 D24</span>
-      </div>
-    </div>
-    <!-- <div class="frame">
-      <div style="height: 50px;">
-        <span class="header_table" style="padding-left:0px;">
-          <div>总数 
-            <span>{{ work.totalNum }}</span>
-          </div>
-        </span>
-        <span class="top_right">
-          <div>
-            <a-row :gutter="12">
-              <a-col>
-                <span>发布人员</span>
-                <br>
+      <!-- <div>日期 
+        <span style="background-color: black;padding: 0 10px;color:#fff">{{ date }}</span>
+      </div> -->
+      <a-row style="position: relative;" >
+        <a-col :span="12">
+          <span class="title">作业</span>
+          <br>
+          <span style="font-size:15px"><InfoCircleOutlined style="font-size:13px;color:black" /> 可用于热敏打印</span>
+        </a-col>
+        <a-col :span="12" style="position: absolute;right: 0;top: 0;">
+          <div class="info">
+            <a-row :gutter="[10,10]">
+              <a-col style="font-weight: 900;text-align-last:justify">
                 <span>发布日期</span>
                 <br>
-                <span>时间戳</span>
+                <span>有效期至</span>
                 <br>
-                <span>更新时间</span>
+                <span>发布者</span>
               </a-col>
               <a-col>
-                2517746965
+                <span>21-08-25</span>
                 <br>
-                2021-08-24
+                <span>21-08-25</span>
                 <br>
-                1629807446
-                <br>
-                N/A
+                <span>2517746965</span>
               </a-col>
             </a-row>
           </div>
-        </span>
-      </div>
-      <div style="clear:both;"></div>
-      
-      <div class="content">
-        <div v-for="(item, index) in works" :key="index">
-          <h2>{{item.name}}</h2>
-          <ol>
-            <li class="works" v-for="(items, index) in item.text" :key="index">
-              <span>{{items}}</span>
-            </li>
-          </ol>
-        </div>
-       
-      </div>
-      
-    </div> -->
+        </a-col>
+      </a-row>
+    </div>
 
-    <!-- <table border="0" width="100%" v-for="(item, index) in works" :key="index">
-      <tr>
-        <th height="30" colspan="4" style="text-align: center">{{ item.name }}</th>  
-      </tr>
-      <tr>
-        <th>序号</th>
-        <th>作业</th>
-        <th>备注</th>
-        <th>完成</th>
-      </tr>
-      <tr v-for="(items,index) in item.text" :key="index">
-        <td>{{ index+1 }}</td>
-        <td>{{ items }}</td>
-        <td></td>
-        <td width="40px"></td>
-      </tr>
-    </table> -->
-    <!-- <button @click="work.total()">Button</button> -->
-    <table class="table table-bordered">
-      <thead>
+    <div v-for="(item,index) in works" :key="index">
+      <table border="1" class="tables">
         <tr>
-          <th scope="col" style="width:50px;text-align: center;">序号</th>
-          <th scope="col" style="text-align: center;">作业</th>
-          <!-- <th scope="col" style="text-align: center;">备注</th> -->
-          <th scope="col" style="width:50px;text-align: center;">完成</th>
+          <th colspan="3" class="subject">{{ item.name }}</th>
         </tr>
-      </thead>
-      <tbody v-for="(item, index) in works" :key="index">
-        <!-- <div class="table table-bordered" v-for="(item, index) in works" :key="index"> -->
-          <tr style="text-align: center;color:#1890ff;background-color: #e6f7ff;">
-            <td colspan="4" style="">{{ item.name }}</td>
-          </tr>
-          <tr v-for="(items, index) in item.text" :key="index">
-            <td scope="row" style="text-align: center;">{{ index+1 }}</td>
-            <td>{{ items }}</td>
-            <!-- <td></td> -->
-            <td></td>
-          </tr>
-        <!-- </div> -->
-      </tbody>
-    </table>
+        <tr>
+          <td style="width:50px">序号</td>
+          <td>作业</td>
+          <td style="width:50px">完成</td>
+        </tr>
+        <tr v-for="(items, index) in item.text" :key="index">
+          <td>{{ index+1 }}</td>
+          <td style="white-space: normal">{{ items }}</td>
+          <td></td>
+        </tr>
+        
+      </table>
+      <br>
+    </div>
   </div>
 </template>
 
 <script>
 import { defineComponent, reactive, ref, watch } from 'vue';
+import { InfoCircleOutlined } from '@ant-design/icons-vue';
 
 export default {
   props: {
     date: String,
     works: Array
+  },
+  components: {
+    InfoCircleOutlined
   },
   setup(props) {
     watch(props,()=>{
@@ -130,10 +92,7 @@ export default {
 </script>
 
 <style scoped>
-/* .image {
-  padding: 8px;
-}
-
+/*
 .frame {
   padding: 0px;
   border: 2px solid black;
@@ -147,46 +106,40 @@ export default {
   transform:translate(-50%,0);
 }
 
-.top_right {
-  padding: 0 3px;
-  border-bottom: 1px solid black;
-  border-left: 1px solid black;
-  font-size: 1rem;
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-
-.content {
-  padding: 15px;
-  font-size: 1.2rem;
-  font-weight: 600;
-}
-
-.works {
-  font-size: 1.2rem;
-  margin-left: 10px;
-}
-
-.title {
-  font-size: 2rem;
-  font-weight: 500;
-  text-align: center;
-}
-
 .header_table {
   font-size: 25px;
   position: absolute;
   left: 0;
   top: 0;
 }
-
-.header_table div {
-  padding-left: 6px;
+ */
+table {
+  border-color: black;
 }
 
-.header_table >div >span {
-  line-height: 0px;
-} */
+td, th{
+  padding: 3px;
+  font-size: 18px;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.info {
+  border: 1px solid black;
+  padding: 0 3px;
+  font-weight: 600;
+  border-radius: 6px;
+}
+
+.tables {
+  width: 100%;
+}
+
+.subject {
+  text-align: center;
+}
 
 </style>

@@ -12,15 +12,10 @@
 
     <div class="container">
       <a-progress :percent="quickStart.progress" />
-      <!-- <a-tabs v-model:activeKey="activeKey">
-        <a-tab-pane key="1" tab="Tab 1">Content of Tab Pane 1</a-tab-pane>
-        <a-tab-pane key="2" tab="Tab 2" force-render>Content of Tab Pane 2</a-tab-pane>
-        <a-tab-pane key="3" tab="Tab 3">Content of Tab Pane 3</a-tab-pane>
-      </a-tabs> -->
       <div style="margin:5px"></div>
       <div>
         <a-divider/>
-        <div v-show="quickStart.show.date">
+        <div v-show="quickStart.show.step1">
           <h2>1. 选择生效日期</h2>
           <a-radio-group v-model:value="quickStart.addDate" style="width: 100%">
             <a-radio value="now">仅今天</a-radio>
@@ -28,10 +23,14 @@
             <a-radio value="range">自定义范围</a-radio>
           </a-radio-group>
           <div style="margin: 20px"></div>
-          <a-date-picker v-model:value="quickStart.date" v-show="quickStart.addDate == 'custom'" />
+          <a-input-number v-model:value="quickStart.dateObj.s.yy" :min="0" :max="9999"  v-show="quickStart.addDate == 'custom'"/>
+          <a-input-number v-model:value="quickStart.dateObj.s.mm" :min="1" :max="12"  v-show="quickStart.addDate == 'custom'"/>
+          <a-input-number v-model:value="quickStart.dateObj.s.dd" :min="1" :max="31"  v-show="quickStart.addDate == 'custom'"/>
+          <!-- <a-date-picker v-model:value="quickStart.date" v-show="quickStart.addDate == 'custom'" /> -->
           <a-range-picker v-model:value="quickStart.rangeDate" v-show="quickStart.addDate == 'range'" />
         </div>
-        <div v-show="quickStart.show.subject">
+        <a-divider/>
+        <div v-show="quickStart.show.step1">
           <h2>2. 勾选需要发布的科目</h2>
           <a-checkbox-group v-model:value="quickStart.subject">
             <a-row>
@@ -41,45 +40,17 @@
             </a-row>
           </a-checkbox-group>
         </div>
-        <div v-show="quickStart.show.addWork">
+        <a-divider/>
+        <div v-show="quickStart.show.step2">
           <h2>3. 填写各科作业</h2>
           <a-tabs v-model:activeKey="activeKey">
             <a-tab-pane v-for="(item,index) in quickStart.subject" :key="index" :tab="item">
-              <!-- <a-row>
-                <a-col :span="24">
-                  <a-form-item label="名称 ">
-                    <a-input v-model:value="quickStart.addWork.text" />
-                  </a-form-item>
-                </a-col>
-                <a-col :span="24">
-                  <a-form-item label="范围 ">
-                    <a-input v-model:value="quickStart.addWork.pages" />
-                  </a-form-item>
-                </a-col>
-                <a-col :span="24">
-                  <a-form-item label="标签 ">
-                    <a-select
-                      v-model:value="quickStart.addWork.tag"
-                      :options="quickStart.tagOptions"
-                      mode="tags"
-                      placeholder="添加标签"
-                      style="width: 100%"
-                    >
-                    </a-select>
-                  </a-form-item>
-                </a-col>
-                <a-col :span="24">
-                  <a-form-item label="备注 ">
-                    <a-input v-model:value="quickStart.addWork.remarks" />
-                  </a-form-item>
-                </a-col>
-              </a-row> -->
-
               <a-textarea v-model:value="quickStart.workArr[index]" placeholder="Basic usage" :rows="4" />
             </a-tab-pane>
           </a-tabs>
         </div>
-        <div v-show="quickStart.show.result">
+
+        <div v-show="quickStart.show.step3">
           <a-result
             status="success"
             title="图片已生成"
@@ -93,7 +64,7 @@
         </div>
         
         <div>
-          <a-result
+          <!-- <a-result
             status="success"
             title="请检查"
             sub-title="确认无误点击提交"
@@ -101,8 +72,8 @@
             <template #icon>
               <smile-twoTone />
             </template>
-          </a-result>
-          <ExportImage ref="imageDom" style="width:600px;" :date="quickStart.addDate" :works="quickStart.work"></ExportImage>
+          </a-result> -->
+          <ExportImage ref="imageDom" style="width:600px;padding:20px;top: -99999px;position: absolute;" :date="quickStart.date" :works="quickStart.work"></ExportImage>
         </div>
 
         <a-divider />
@@ -135,6 +106,7 @@ import { Modal } from 'ant-design-vue';
 import { ArrowRightOutlined, ArrowLeftOutlined, RollbackOutlined, SmileTwoTone } from '@ant-design/icons-vue';
 import html2canvas from 'html2canvas'
 import ExportImage from '../components/pushWork/ExportImage.vue'
+import { dividerProps } from 'ant-design-vue/lib/divider';
 
 export default {
   components: {
@@ -142,11 +114,16 @@ export default {
     ArrowLeftOutlined,
     RollbackOutlined,
     SmileTwoTone,
-
     ExportImage
   },
-  
   setup() {
+     onMounted(()=>{
+      let d = new Date()
+      quickStart.dateObj.s.yy = d.getFullYear()
+      quickStart.dateObj.s.mm = d.getMonth()+1
+      quickStart.dateObj.s.dd = d.getDay()
+    })
+    
     const imageDom = ref(null)
     const quickStart = reactive({
       progress: 0,
@@ -158,18 +135,29 @@ export default {
         '体育','其他',
       ],
       show: {
-        date: true,
-        subject: false,
-        addWork: false,
-        result: false,
         nextButton: true,
         nextButtonText: '下一步',
         disabledBackButton: true,
-        againPush: false
+        againPush: false,
+        step1: true,
+        step2: false,
+        step3: false,
       },
       addDate: '',
       tagOptions: [{value:'普通'},{value:'重要'},{value:'惩罚性'}],
-      date: '',
+      dateObj: {
+        s:{
+          yy: null,
+          mm: null,
+          dd: null
+        },
+        e:{
+          yy: null,
+          mm: null,
+          dd: null
+        }
+      },
+      date: '2108D25',
       rangeDate: [],
       addWork: {
         subject: '',
@@ -183,61 +171,44 @@ export default {
       next: (()=>{
         console.log('[DEBUG] 下一步')
         
-        if ( quickStart.show.date == true && quickStart.show.subject == false && quickStart.show.addWork == false ) {
+        if ( quickStart.show.step1 == true && quickStart.show.step2 == false && quickStart.show.step3 == false ) {
           // --- 状态更新 ---
-          quickStart.show.date = false
-          quickStart.show.subject = true
-          quickStart.show.addWork = false
-          quickStart.show.result = false
+          quickStart.show.step1 = false
+          quickStart.show.step2 = true
           quickStart.progress += 30
 
           quickStart.show.disabledBackButton = false
+          quickStart.show.nextButtonText = '提交'
           // --- 逻辑代码 ---
           console.log(quickStart.addDate)
           
-        }else if ( quickStart.show.date == false && quickStart.show.subject == true && quickStart.show.addWork == false ) {
+        }else if ( quickStart.show.step1 == false && quickStart.show.step2 == true && quickStart.show.step3 == false ) {
           // --- 状态更新 ---
-          quickStart.show.date = false
-          quickStart.show.subject = false
-          quickStart.show.addWork = true
-          quickStart.show.result = false
+          quickStart.show.step2 = false
+          quickStart.show.step3 = true
           quickStart.progress += 40
-          quickStart.show.nextButtonText = '提交'
-          // console.log(quickStart.addWork.tag)
+          
           // --- 逻辑代码 ---
-        }else if ( quickStart.show.date == false && quickStart.show.subject == false && quickStart.show.addWork == true ) {
-          // --- 状态更新 ---
-          quickStart.show.nextButton = false
-          quickStart.show.date = false
-          quickStart.show.subject = false
-          quickStart.show.addWork = false
-          quickStart.show.result = true
-          quickStart.progress += 30
-          quickStart.show.againPush = true
-          // --- 逻辑代码 ---
-          // 合并科目和作业
           quickStart.subject.map((item,index) => {
               quickStart.work.push({name:item, text:quickStart.workArr[index].split('\n')})
           })
+
+          quickStart.show.nextButtonText = '再次生成'
         }
       }),
 
       back: (()=>{
-        if ( quickStart.show.date == false && quickStart.show.subject == true && quickStart.show.addWork == false ) {
+        if ( quickStart.show.step1 == false && quickStart.show.step2 == true && quickStart.show.step3 == false ) {
           // 状态更新
-          quickStart.show.date = true
-          quickStart.show.subject = false
-          quickStart.show.addWork = false
-          quickStart.show.result = false
+          quickStart.show.step1 = true
+          quickStart.show.step2 = false
           quickStart.progress -= 30
           quickStart.show.disabledBackButton = true
-        }else if ( quickStart.show.date == false && quickStart.show.subject == false && quickStart.show.addWork == true ) {
+        }else if ( quickStart.show.step1 == false && quickStart.show.step2 == false && quickStart.show.step3 == true ) {
           // 状态更新
           quickStart.show.nextButton = true
-          quickStart.show.date = false
-          quickStart.show.subject = true
-          quickStart.show.addWork = false
-          quickStart.show.result = false
+          quickStart.show.step2 = true
+          quickStart.show.step3 = false
           quickStart.progress -= 40
           quickStart.show.nextButtonText = '下一步'
         }
@@ -248,16 +219,19 @@ export default {
         location.reload();
       }),
 
+      imageUrl: '',
+
       createImage: ()=>{
-        html2canvas(imageDom.value.$el).then(canvas => {
+        html2canvas(imageDom.value.$el, {dpi:300,scale:4}).then(canvas => {
           let dataURL = canvas.toDataURL("image/png");
-          if (dataURL !== "") {
+          quickStart.imageUrl = dataURL
+          if (quickStart.imageUrl !== "") {
             Modal.success({
               width: 1000,
               title: '导出成功',
               content: h('div', {}, [
                 h('p', '长按图片保存'),
-                h('img', {src:imgUrl}),
+                h('img', {src:quickStart.imageUrl, style: {'widht': '100%'}}),
               ]),
             });
           }

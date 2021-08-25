@@ -17,7 +17,8 @@ import {
   Result,
   DatePicker,
   Select,
-  Textarea
+  // Textarea,
+  InputNumber
 } from 'ant-design-vue';
 import App from './App.vue'
 import './registerServiceWorker'
@@ -44,6 +45,7 @@ app.use(Radio)
 app.use(Result)
 app.use(DatePicker)
 app.use(Select)
-app.use(Textarea)
+// app.use(Textarea)
+app.use(InputNumber)
 
 app.mount('#app')
