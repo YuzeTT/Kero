@@ -46,13 +46,14 @@
           <h2>3. 填写各科作业</h2>
           <a-tabs v-model:activeKey="activeKey">
             <a-tab-pane v-for="(item,index) in quickStart.subject" :key="index" :tab="item">
-              <a-textarea v-model:value="quickStart.workArr[index]" placeholder="Basic usage" :rows="4" />
+              <a-textarea v-model:value="quickStart.workArr[index]" placeholder="请输入作业，使用换行新增一项。" :rows="4" />
             </a-tab-pane>
           </a-tabs>
           <a-divider/>
         </div>
 
         <div v-show="quickStart.show.step3">
+          <a-divider/>
           <!-- <a-result
             status="success"
             title="图片已生成"
@@ -63,7 +64,7 @@
               <a-button key="buy" @click="quickStart.createImage()">保存</a-button>
             </template>
           </a-result> -->
-          <h2 style="font-weight: 600;font-size:1.4rem">快速开始</h2>
+          <!-- <h2 style="font-weight: 600;font-size:1.4rem">快速开始</h2> -->
           <div>
             <!-- <a-result
               status="success"
@@ -115,6 +116,7 @@
         </a-button>
       </div>
     </div>
+    <!-- <ExportImage ref="imageDom" class="exportImage" :date="quickStart.date" :works="quickStart.work"></ExportImage> -->
   </div>
 </template>
 
@@ -306,17 +308,20 @@ export default {
 
 .exportImage {
   width:600px;
-  padding: 20px;
+  padding: 30px;
   /* text-align: center; */
-  /* top: -99999px;
-  position: absolute; */
+  top: -99999px;
+  position: absolute;
 }
 
 .imageBox {
   border-radius: 10px;
-  background: rgba(0, 0, 0, 0.05);
+  /* background: rgba(0, 0, 0, 0.05); */
   width:100%;
-  padding: 30px;
+  padding: 10px;
+  /* padding: 5px;
+  min-height: 80px; */
   text-align: center;
+  box-shadow: 0 3px 12px -4px rgb(0 0 0 / 12%), 0 0 1px 0 rgb(0 0 0 / 8%)
 }
 </style>

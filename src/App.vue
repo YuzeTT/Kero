@@ -12,6 +12,10 @@ html, body {
   margin: 0;
 }
 
+body {
+  background-color: #FAFAFA;
+}
+
 .imageShow {
   width: 100%;
   height: auto;
