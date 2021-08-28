@@ -16,6 +16,10 @@
               发布作业
             </a-button>
           </router-link>
+          <a-button block size="large" onclick="location.reload();">
+            <template #icon><ReloadOutlined /></template>
+            PWA更新
+          </a-button>
           <a-button block size="large" @click="showModal">
             <template #icon><InfoCircleOutlined /></template>
             关于
@@ -33,7 +37,7 @@
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
 import { defineComponent, ref } from 'vue';
-import { CloudUploadOutlined,InfoCircleOutlined } from '@ant-design/icons-vue';
+import { CloudUploadOutlined,InfoCircleOutlined,ReloadOutlined } from '@ant-design/icons-vue';
 
 export default defineComponent ({
   name: 'Home',
@@ -41,6 +45,7 @@ export default defineComponent ({
     // HelloWorld
     CloudUploadOutlined,
     InfoCircleOutlined,
+    ReloadOutlined
   },
   setup() {
     const visible = ref(false);

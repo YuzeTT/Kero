@@ -23,11 +23,22 @@
             <a-radio value="range">自定义范围</a-radio>
           </a-radio-group>
           <div style="margin: 20px"></div>
-          <a-input-number v-model:value="quickStart.dateObj.s.yy" :min="0" :max="9999"  v-show="quickStart.addDate == 'custom'"/>
-          <a-input-number v-model:value="quickStart.dateObj.s.mm" :min="1" :max="12"  v-show="quickStart.addDate == 'custom'"/>
-          <a-input-number v-model:value="quickStart.dateObj.s.dd" :min="1" :max="31"  v-show="quickStart.addDate == 'custom'"/>
+          <div v-show="quickStart.addDate == 'custom'" style="font-size:20px">
+            <a-input-number v-model:value="quickStart.dateObj.s.yy" :min="0" :max="9999"/> 年
+            <a-input-number v-model:value="quickStart.dateObj.s.mm" :min="1" :max="12"/> 月
+            <a-input-number v-model:value="quickStart.dateObj.s.dd" :min="1" :max="31"/> 日
+          </div>
           <!-- <a-date-picker v-model:value="quickStart.date" v-show="quickStart.addDate == 'custom'" /> -->
-          <a-range-picker v-model:value="quickStart.rangeDate" v-show="quickStart.addDate == 'range'" />
+          <!-- <a-range-picker v-model:value="quickStart.rangeDate" v-show="quickStart.addDate == ''" /> -->
+          <div v-show="quickStart.addDate == 'range'" style="font-size:20px">
+            <a-input-number v-model:value="quickStart.dateObj.s.yy" :min="0" :max="9999"/> 年
+            <a-input-number v-model:value="quickStart.dateObj.s.mm" :min="1" :max="12"/> 月
+            <a-input-number v-model:value="quickStart.dateObj.s.dd" :min="1" :max="31"/> 日
+            <br>到<br>
+            <a-input-number v-model:value="quickStart.dateObj.e.yy" :min="0" :max="9999"/> 年
+            <a-input-number v-model:value="quickStart.dateObj.e.mm" :min="1" :max="12"/> 月
+            <a-input-number v-model:value="quickStart.dateObj.e.dd" :min="1" :max="31"/> 日
+          </div>
           <a-divider/>
         </div>
         <div v-show="quickStart.show.step1">
@@ -142,6 +153,10 @@ export default {
       quickStart.dateObj.s.yy = d.getFullYear()
       quickStart.dateObj.s.mm = d.getMonth()+1
       quickStart.dateObj.s.dd = d.getDate()
+      quickStart.dateObj.e.yy = d.getFullYear()
+      quickStart.dateObj.e.mm = d.getMonth()+1
+      quickStart.dateObj.e.dd = d.getDate()
+
 
       // quickStart.setDate('now',quickStart.dateObj.s,quickStart.dateObj.e)
     })
