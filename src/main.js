@@ -17,7 +17,6 @@ import {
   Result,
   DatePicker,
   Select,
-  // Textarea,
   InputNumber,
   Spin
 } from 'ant-design-vue';
@@ -46,7 +45,6 @@ app.use(Radio)
 app.use(Result)
 app.use(DatePicker)
 app.use(Select)
-// app.use(Textarea)
 app.use(InputNumber)
 app.use(Spin)
 

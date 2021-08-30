@@ -36,8 +36,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
-// import HelloWorld from '@/components/HelloWorld.vue'
 import { defineComponent, reactive, ref, onMounted } from 'vue';
 import { CloudUploadOutlined,InfoCircleOutlined,ReloadOutlined,ArrowRightOutlined } from '@ant-design/icons-vue';
 import {  useRouter } from 'vue-router'
@@ -45,7 +43,6 @@ import {  useRouter } from 'vue-router'
 export default defineComponent ({
   name: 'Home',
   components: {
-    // HelloWorld
     CloudUploadOutlined,
     InfoCircleOutlined,
     ReloadOutlined,
@@ -176,12 +173,6 @@ export default defineComponent ({
   padding: 24px;
   transition: box-shadow .2s ease,border .2s ease;
 }
-
-/* .card :hover {
-  transition:box-shadow .2s ease;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
-  border: 1px solid transparent
-} */
 
 @media (hover: hover) {
   .card:hover {
