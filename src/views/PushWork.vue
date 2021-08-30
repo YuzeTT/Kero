@@ -92,7 +92,7 @@
               sub-title="长按下方图片保存。"
             >
             </a-result>
-            <ExportImage ref="imageDom" class="exportImage" :date="quickStart.date" :works="quickStart.work"></ExportImage>
+            <ExportImage ref="imageDom" class="exportImage" :date="quickStart.date" :works="quickStart.work" :sing="auth.sing"></ExportImage>
             
             <div class="imageBox">
               <a-spin style="" v-show="quickStart.show.loadingImage" />
@@ -127,17 +127,15 @@
         </a-button>
       </div>
     </div>
-    <ExportImage ref="imageDom" :date="quickStart.date" :works="quickStart.work"></ExportImage>
+    <ExportImage ref="imageDom" :date="quickStart.date" :works="quickStart.work" :sing="auth.sing"></ExportImage>
   </div>
 </template>
 
 <script>
-import { defineComponent, reactive, ref, onMounted,h, toRaw } from 'vue';
-import { Modal } from 'ant-design-vue';
+import { reactive, ref, onMounted, } from 'vue';
 import { ArrowRightOutlined, ArrowLeftOutlined, RollbackOutlined, SmileTwoTone } from '@ant-design/icons-vue';
 import html2canvas from 'html2canvas'
 import ExportImage from '../components/pushWork/ExportImage.vue'
-import { dividerProps } from 'ant-design-vue/lib/divider';
 
 export default {
   components: {
@@ -157,8 +155,15 @@ export default {
       quickStart.dateObj.e.mm = d.getMonth()+1
       quickStart.dateObj.e.dd = d.getDate()
 
+      let sing = localStorage.getItem('sing');
+      // console.log(sing)
+      sing != null? auth.sing = sing : auth.sing = 'N/A'
 
       // quickStart.setDate('now',quickStart.dateObj.s,quickStart.dateObj.e)
+    })
+
+    const auth = reactive({
+      sing: 'N/A'
     })
     
     const imageDom = ref(null)
@@ -301,7 +306,8 @@ export default {
     return {
       activeKey: ref('1'),
       quickStart,
-      imageDom
+      imageDom,
+      auth
     }
   },
   // onMounted() {

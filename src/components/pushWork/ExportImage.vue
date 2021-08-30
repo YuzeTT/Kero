@@ -31,7 +31,7 @@
                 <br>
                 <span>{{date[1]}}</span>
                 <br>
-                <span>2517746965</span>
+                <span>{{ sing }}</span>
               </a-col>
             </a-row>
           </div>
@@ -69,7 +69,8 @@ import { InfoCircleOutlined } from '@ant-design/icons-vue';
 export default {
   props: {
     date: Array,
-    works: Array
+    works: Array,
+    sing: String
   },
   components: {
     InfoCircleOutlined

@@ -8,6 +8,7 @@
       <span class="subtitle">学习工具平台</span> -->
 
       <h1 class="title">Kero 工具箱</h1>
+      <p class="sing">当前身份：{{ auth.sing }}</p>
     </div>
     <div class="container">
       <div class="buttons">
@@ -62,7 +63,7 @@
 <script>
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
-import { defineComponent, ref } from 'vue';
+import { defineComponent, reactive, ref, onMounted } from 'vue';
 import { CloudUploadOutlined,InfoCircleOutlined,ReloadOutlined,ArrowRightOutlined } from '@ant-design/icons-vue';
 
 export default defineComponent ({
@@ -75,6 +76,10 @@ export default defineComponent ({
     ArrowRightOutlined
   },
   setup() {
+    onMounted(()=>{
+      let sing = localStorage.getItem('sing');
+      sing != null? auth.sing = sing : auth.sing = '游客'
+    })
     const visible = ref(false);
 
     const showModal = () => {
@@ -86,10 +91,15 @@ export default defineComponent ({
       visible.value = false;
     };
 
+    const auth = reactive({
+      sing: '游客'
+    })
+
     return {
       visible,
       showModal,
       handleOk,
+      auth
     };
   }
 })
@@ -192,6 +202,12 @@ export default defineComponent ({
 
 .footer {
   padding-top: 30px;
+  text-align: center;
+  color: #8c8c8c;
+}
+
+.sing {
+  font-size: 25px;
   text-align: center;
   color: #8c8c8c;
 }
