@@ -10,8 +10,8 @@
       <a-row style="position: relative;" >
         <a-col :span="12">
           <span class="title">作业</span>
-          <span style="padding-left:15px;font-size:23px;">数量
-            <span style="background-color: black;color:#fff;padding: 0 5px;"><span>{{ work.totalNum }}</span></span>
+          <span style="padding-left:15px;font-size:30px;">数量
+            <span style="font-size:23px;background-color: black;color:#fff;padding: 0 5px;font-weight: 700;"><span>{{ work.totalNum }}</span></span>
           </span>
           <br>
           <span style="font-size:20px;color: black;"><InfoCircleOutlined style="font-size:18px;color:black" /> 可用于热敏打印</span>
@@ -19,14 +19,14 @@
         <a-col :span="12" style="position: absolute;right: 0;top: 0;">
           <div class="info">
             <a-row :gutter="[10,10]">
-              <a-col style="font-weight: 900;text-align-last:justify">
+              <a-col style="font-weight: 400;text-align-last:justify">
                 <span>发布日期</span>
                 <br>
                 <span>有效期至</span>
                 <br>
                 <span>发布者</span>
               </a-col>
-              <a-col>
+              <a-col style="font-weight: 500;">
                 <span>{{date[0]}}</span>
                 <br>
                 <span>{{date[1]}}</span>
@@ -58,6 +58,7 @@
       <br>
     </div>
     <span style="font-size: 20px;color: black;">TS {{ work.ts }}</span>
+    <!-- <div style="font-size: 20px;color: black;">1/1</div> -->
   </div>
 </template>
 
@@ -142,7 +143,8 @@ td, th{
 .info {
   border: 1px solid black;
   padding: 0 5px;
-  font-weight: 600;
+  padding-bottom: 3px;
+  /* font-weight: 600; */
   border-radius: 6px;
   font-size: 18px;
   color: black;

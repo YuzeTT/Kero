@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="pushWork">
     <!-- style="border: 1px solid rgb(235, 237, 240)" -->
      <a-page-header
       title="发布作业"
@@ -121,13 +121,13 @@
             </a-button>
           </a-col>
         </a-row>
-        <a-button type="primary" block size="large" @click="quickStart.againPush()" v-show="quickStart.show.againPush">
-          再次发布
+        <a-button type="primary" block size="large" @click="() => $router.push('/')" v-show="quickStart.show.againPush">
+          返回首页
           <RollbackOutlined />
         </a-button>
       </div>
     </div>
-    <!-- <ExportImage ref="imageDom" class="exportImage" :date="quickStart.date" :works="quickStart.work"></ExportImage> -->
+    <ExportImage ref="imageDom" :date="quickStart.date" :works="quickStart.work"></ExportImage>
   </div>
 </template>
 
@@ -310,6 +310,10 @@ export default {
 </script>
 
 <style scoped>
+.pushWork {
+  font-family: 'Noto Sans SC', sans-serif;
+}
+
 .title {
   text-align: center;
   padding-top: 30px;
