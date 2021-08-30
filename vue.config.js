@@ -2,7 +2,7 @@ module.exports = {
   /* pwa配置*/
   pwa: {
     name: 'Kero',
-    themeColor: '#000000',
+    themeColor: '#FFFFFF',
     msTileColor: '#000000',
     appleMobileWebAppCapable: 'yes',
     appleMobileWebAppStatusBarStyle: 'black',
