@@ -173,6 +173,7 @@ export default defineComponent ({
   border-radius: 5px;
   padding: 24px;
   transition: box-shadow .2s ease,border .2s ease;
+  cursor:pointer;
 }
 
 @media (hover: hover) {
