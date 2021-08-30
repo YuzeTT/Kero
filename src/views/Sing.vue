@@ -3,10 +3,13 @@
     <br>
     <h1>写入签名</h1>
     <div>
-      <label for="password">密码：</label><input id="password" type="text" v-model="auth.form.password" placeholder="请输入" style="max-width:300px;width:70%">
+      <label for="password">密码：</label><input id="password" type="text" v-model="auth.form.password" placeholder="请输入动态密码（全部小写）" style="max-width:300px;width:70%">
       <div style="margin: 8px 0"></div>
-      <label for="password">签名：</label><input type="text" v-model="auth.form.sing" placeholder="请输入" style="max-width:300px;width:70%">
+      <label for="password"><span v-on:dblclick="() => $router.push('/remove_sing')">签名：</span></label><input type="text" maxlength="18" v-model="auth.form.sing" placeholder="请输入签名（18个英文/9个中文）" style="max-width:300px;width:70%">
       <div style="margin: 8px 0"></div>
+      <p style="color: #8c8c8c">如未知密码，请联系管理员获取动态密码</p>
+      <button @click="() => $router.go('-1')">返回</button>
+      <span style="margin: 0 5px"></span>
       <button @click="auth.writeSing">提交</button>
       <div style="margin: 8px 0"></div>
       <p :style="auth.writeSingInfoStyle">{{ auth.writeSingInfo }}</p>
@@ -32,9 +35,9 @@ export default {
         time.mm = parseInt(time.mm) < 10 ? '0' + time.mm : time.mm
         time.dd = parseInt(time.dd) < 10 ? '0' + time.dd : time.dd
         time.HH = parseInt(time.HH) < 10 ? '0' + time.HH : time.HH
-        let pwd = md5(''.concat(time.yy,time.mm,time.dd,time.HH))
+        let pwd = md5(''.concat(time.yy,time.mm,time.dd,time.HH,'auth.uzett.com'))
 
-        if (auth.form.password == pwd) {
+        if (auth.form.password.toLowerCase() == pwd) {
           localStorage.setItem('sing', auth.form.sing);
           auth.writeSingInfoStyle.color = 'green'
           auth.writeSingInfo = '写入成功'

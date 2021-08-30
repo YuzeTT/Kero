@@ -8,7 +8,7 @@
       <span class="subtitle">学习工具平台</span> -->
 
       <h1 class="title">Kero 工具箱</h1>
-      <p class="sing">当前身份：{{ auth.sing }}</p>
+      <p class="sing" @click="auth.goSing()">当前身份：{{ auth.sing }}</p>
     </div>
     <div class="container">
       <div class="buttons">
@@ -65,6 +65,7 @@
 // import HelloWorld from '@/components/HelloWorld.vue'
 import { defineComponent, reactive, ref, onMounted } from 'vue';
 import { CloudUploadOutlined,InfoCircleOutlined,ReloadOutlined,ArrowRightOutlined } from '@ant-design/icons-vue';
+import {  useRouter } from 'vue-router'
 
 export default defineComponent ({
   name: 'Home',
@@ -76,6 +77,8 @@ export default defineComponent ({
     ArrowRightOutlined
   },
   setup() {
+    const router = useRouter()  
+
     onMounted(()=>{
       let sing = localStorage.getItem('sing');
       sing != null? auth.sing = sing : auth.sing = '游客'
@@ -92,7 +95,20 @@ export default defineComponent ({
     };
 
     const auth = reactive({
-      sing: '游客'
+      sing: '游客',
+      i: 1,
+      goSing: () => {
+        if(auth.i >= 5) {
+          router.push('/sing')
+        }else {
+          auth.i ++
+
+          setTimeout(()=>{
+            auth.i = 1
+          },2000)
+        }
+        
+      }
     })
 
     return {

@@ -127,7 +127,7 @@
         </a-button>
       </div>
     </div>
-    <ExportImage ref="imageDom" :date="quickStart.date" :works="quickStart.work" :sing="auth.sing"></ExportImage>
+    <!-- <ExportImage ref="imageDom" :date="quickStart.date" :works="quickStart.work" :sing="auth.sing"></ExportImage> -->
   </div>
 </template>
 
