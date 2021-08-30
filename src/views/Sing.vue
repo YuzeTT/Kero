@@ -3,7 +3,7 @@
     <br>
     <h1>写入签名</h1>
     <div>
-      <label for="password">密码：</label><input id="password" type="text" v-model="auth.form.password" placeholder="请输入动态密码（全部小写）" style="max-width:300px;width:70%">
+      <label for="password">密码：</label><input id="password" type="text" v-model="auth.form.password" placeholder="请输入动态密码" style="max-width:300px;width:70%">
       <div style="margin: 8px 0"></div>
       <label for="password"><span v-on:dblclick="() => $router.push('/remove_sing')">签名：</span></label><input type="text" maxlength="18" v-model="auth.form.sing" placeholder="请输入签名（18个英文/9个中文）" style="max-width:300px;width:70%">
       <div style="margin: 8px 0"></div>
