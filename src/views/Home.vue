@@ -1,37 +1,12 @@
 <template>
   <div class="home">
-    <!-- <img alt="Vue logo" src="../assets/logo.png"> -->
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
     <div class="header">
-      <!-- <span class="title">Kero</span>
-      <div></div>
-      <span class="subtitle">学习工具平台</span> -->
-
       <h1 class="title">Kero 工具箱</h1>
       <p class="sing" @click="auth.goSing()">当前身份：{{ auth.sing }}</p>
     </div>
     <div class="container">
       <div class="buttons">
         <a-space direction="vertical" style="width: 100%;">
-          <!-- <router-link to="/pushWork">
-            <a-button type="primary" block size="large">
-              <template #icon><CloudUploadOutlined /></template>
-              发布作业
-            </a-button>
-          </router-link>
-          
-          <a-button block size="large" onclick="location.reload();">
-            <template #icon><ReloadOutlined /></template>
-            PWA更新
-          </a-button> -->
-          <!-- <a-button block size="large" @click="showModal">
-            <template #icon><InfoCircleOutlined /></template>
-            关于
-          </a-button>
-          <a-modal v-model:visible="visible" title="关于" @ok="handleOk">
-            <p>当前版本：v0.1.0-dev</p>
-          </a-modal> -->
-
           <br>
           <a-row :gutter="[30,30]">
             <a-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">

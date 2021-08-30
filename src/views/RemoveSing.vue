@@ -19,8 +19,6 @@
 </template>
 
 <script>
-import { onMounted } from 'vue';
-
 export default {
   setup() {
     return {

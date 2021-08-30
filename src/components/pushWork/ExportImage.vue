@@ -1,12 +1,6 @@
 <template>
   <div class="image">
-    <!-- {{ date }}
-    {{ work }} -->
     <div class="header" style="height:100px">
-      <!-- <span class="title">作业</span> -->
-      <!-- <div>日期 
-        <span style="background-color: black;padding: 0 10px;color:#fff">{{ date }}</span>
-      </div> -->
       <a-row style="position: relative;" >
         <a-col :span="12">
           <span class="title">作业</span>
@@ -47,23 +41,20 @@
         <tr>
           <td style="width:50px">序号</td>
           <td>作业</td>
-          <!-- <td style="width:50px">完成</td> -->
         </tr>
         <tr v-for="(items, index) in item.text" :key="index">
           <td>{{ index+1 }}</td>
           <td style="white-space: normal">{{ items }}</td>
-          <!-- <td></td> -->
         </tr>
       </table>
       <br>
     </div>
     <span style="font-size: 20px;color: black;">TS {{ work.ts }}</span>
-    <!-- <div style="font-size: 20px;color: black;">1/1</div> -->
   </div>
 </template>
 
 <script>
-import { defineComponent, reactive, ref, watch } from 'vue';
+import { reactive, watch } from 'vue';
 import { InfoCircleOutlined } from '@ant-design/icons-vue';
 
 export default {
@@ -102,28 +93,6 @@ export default {
 </script>
 
 <style scoped>
-/*
-.frame {
-  padding: 0px;
-  border: 2px solid black;
-  position: relative;
-}
-
-.top_left {
-  padding-left: 6px;
-  position: absolute;
-  left: 50%;
-  transform:translate(-50%,0);
-}
-
-.header_table {
-  font-size: 25px;
-  position: absolute;
-  left: 0;
-  top: 0;
-}
- */
-
 table {
   border-color: black;
 }
@@ -145,7 +114,6 @@ td, th{
   border: 1px solid black;
   padding: 0 5px;
   padding-bottom: 3px;
-  /* font-weight: 600; */
   border-radius: 6px;
   font-size: 18px;
   color: black;
