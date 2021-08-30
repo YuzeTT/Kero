@@ -1,6 +1,5 @@
 <template>
   <div class="pushWork">
-    <!-- style="border: 1px solid rgb(235, 237, 240)" -->
      <a-page-header
       title="发布作业"
       sub-title=""
@@ -18,7 +17,6 @@
           <a-divider/>
           <h2>1. 选择生效日期</h2>
           <a-radio-group v-model:value="quickStart.addDate" style="width: 100%">
-            <!-- <a-radio value="now">仅今天</a-radio> -->
             <a-radio value="custom">自定义</a-radio>
             <a-radio value="range">自定义范围</a-radio>
           </a-radio-group>
@@ -28,8 +26,6 @@
             <a-input-number v-model:value="quickStart.dateObj.s.mm" :min="1" :max="12"/> 月
             <a-input-number v-model:value="quickStart.dateObj.s.dd" :min="1" :max="31"/> 日
           </div>
-          <!-- <a-date-picker v-model:value="quickStart.date" v-show="quickStart.addDate == 'custom'" /> -->
-          <!-- <a-range-picker v-model:value="quickStart.rangeDate" v-show="quickStart.addDate == ''" /> -->
           <div v-show="quickStart.addDate == 'range'" style="font-size:20px">
             <a-input-number v-model:value="quickStart.dateObj.s.yy" :min="0" :max="9999"/> 年
             <a-input-number v-model:value="quickStart.dateObj.s.mm" :min="1" :max="12"/> 月
@@ -65,27 +61,7 @@
 
         <div v-show="quickStart.show.step3">
           <a-divider/>
-          <!-- <a-result
-            status="success"
-            title="图片已生成"
-            sub-title="数据不会保存，刷新即清除。"
-          >
-            <template #extra>
-              <a-button key="console" type="primary">查看图片</a-button>
-              <a-button key="buy" @click="quickStart.createImage()">保存</a-button>
-            </template>
-          </a-result> -->
-          <!-- <h2 style="font-weight: 600;font-size:1.4rem">快速开始</h2> -->
           <div>
-            <!-- <a-result
-              status="success"
-              title="请检查"
-              sub-title="确认无误点击提交"
-            >
-              <template #icon>
-                <smile-twoTone />
-              </template>
-            </a-result> -->
             <a-result
               status="success"
               title="图片已生成"
@@ -96,24 +72,17 @@
             
             <div class="imageBox">
               <a-spin style="" v-show="quickStart.show.loadingImage" />
-              <!-- <img :src="quickStart.imageUrl" alt="图片" width="100%" /> -->
               <img v-show="quickStart.show.image" :src="quickStart.imageUrl" alt="图片" class="imageShow" >
             </div>
-
-          
-
           </div>
           <a-divider/>
         </div>
-        
-      
         <a-row>
           <a-col :span="6">
             <a-button :disabled="quickStart.show.disabledBackButton" block size="large" @click="quickStart.back()" v-show="quickStart.show.nextButton">
               <ArrowLeftOutlined />
             </a-button>
           </a-col>
-          <!-- <a-col :span="1"></a-col> -->
           <a-col :span="18">
             <a-button type="primary" block size="large" @click="quickStart.next()" v-show="quickStart.show.nextButton">
               {{ quickStart.show.nextButtonText }}
@@ -156,10 +125,7 @@ export default {
       quickStart.dateObj.e.dd = d.getDate()
 
       let sing = localStorage.getItem('sing');
-      // console.log(sing)
       sing != null? auth.sing = sing : auth.sing = 'N/A'
-
-      // quickStart.setDate('now',quickStart.dateObj.s,quickStart.dateObj.e)
     })
 
     const auth = reactive({
@@ -310,8 +276,6 @@ export default {
       auth
     }
   },
-  // onMounted() {
-  // },
 }
 </script>
 
@@ -334,18 +298,14 @@ export default {
 .exportImage {
   width:600px;
   padding: 30px;
-  /* text-align: center; */
   top: -99999px;
   position: absolute;
 }
 
 .imageBox {
   border-radius: 10px;
-  /* background: rgba(0, 0, 0, 0.05); */
   width:100%;
   padding: 10px;
-  /* padding: 5px;
-  min-height: 80px; */
   text-align: center;
   box-shadow: 0 3px 12px -4px rgb(0 0 0 / 12%), 0 0 1px 0 rgb(0 0 0 / 8%)
 }
