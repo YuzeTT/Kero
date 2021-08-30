@@ -5,7 +5,7 @@
     <div>
       <label for="password">密码：</label><input id="password" type="text" v-model="auth.form.password" placeholder="请输入动态密码" style="max-width:300px;width:70%">
       <div style="margin: 8px 0"></div>
-      <label for="password"><span v-on:dblclick="() => $router.push('/remove_sing')">签名：</span></label><input type="text" maxlength="18" v-model="auth.form.sing" placeholder="请输入签名（18个英文/9个中文）" style="max-width:300px;width:70%">
+      <label for="password"><span @click="auth.goRemove()">签名：</span></label><input type="text" maxlength="18" v-model="auth.form.sing" placeholder="请输入签名（18个英文/9个中文）" style="max-width:300px;width:70%">
       <div style="margin: 8px 0"></div>
       <p style="color: #8c8c8c">如未知密码，请联系管理员获取动态密码</p>
       <button @click="() => $router.go('-1')">返回</button>
@@ -20,9 +20,12 @@
 <script>
 import { reactive } from '@vue/reactivity'
 import md5 from 'js-md5';
+import {  useRouter } from 'vue-router'
 
 export default {
   setup() {
+    const router = useRouter()  
+
     const auth = reactive({
       writeSing: () => {
         let d = new Date()
@@ -44,6 +47,17 @@ export default {
         }else {
           auth.writeSingInfoStyle.color = 'red'
           auth.writeSingInfo = '密码错误'
+        }
+      },
+      goRemoveInt: 1,
+      goRemove: ()=>{
+        if(auth.goRemoveInt >= 5) {
+          router.push('/remove_sing')
+        }else {
+          auth.goRemoveInt ++
+          setTimeout(()=>{
+            auth.goRemoveInt = 1
+          },2000)
         }
       },
       writeSingInfo: '',
