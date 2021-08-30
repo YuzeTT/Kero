@@ -30,7 +30,7 @@
     <div class="footer">
       <a style="font-size:30px;color:#1A73E8" class="iconfont icon-GitHub" href="https://github.com/YuzeTT/Kero"></a>
       <br>
-      v0.1.0-alpha
+      v0.1.1-alpha
       <br>
       Copyright ©2021 uzett.com. All rights reserved. 
     </div>
@@ -64,7 +64,6 @@ export default defineComponent ({
     };
 
     const handleOk = e => {
-      // console.log(e);
       visible.value = false;
     };
 

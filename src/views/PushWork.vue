@@ -53,7 +53,7 @@
           <h2>3. 填写各科作业</h2>
           <a-tabs v-model:activeKey="activeKey">
             <a-tab-pane v-for="(item,index) in quickStart.subject" :key="index" :tab="item">
-              <a-textarea v-model:value="quickStart.workArr[index]" placeholder="请输入作业，使用换行新增一项。" :rows="4" />
+              <a-textarea v-model:value="quickStart.workArr[index]" placeholder="请输入作业，使用换行新增一项。" :rows="4" style="height: 190px;"/>
             </a-tab-pane>
           </a-tabs>
           <a-divider/>
@@ -96,6 +96,7 @@
         </a-button>
       </div>
     </div>
+    <div style="padding:20px"></div>
     <!-- <ExportImage ref="imageDom" :date="quickStart.date" :works="quickStart.work" :sing="auth.sing"></ExportImage> -->
   </div>
 </template>
@@ -179,8 +180,6 @@ export default {
       workArr: [],
       work: [],
       next: (()=>{
-        console.log('[DEBUG] 下一步')
-        
         if ( quickStart.show.step1 == true && quickStart.show.step2 == false && quickStart.show.step3 == false ) {
           // --- 状态更新 ---
           quickStart.show.step1 = false
@@ -190,7 +189,6 @@ export default {
           quickStart.show.disabledBackButton = false
           quickStart.show.nextButtonText = '提交'
           // --- 逻辑代码 ---
-          console.log(quickStart.addDate)
           quickStart.setDate(quickStart.addDate)
           
         }else if ( quickStart.show.step1 == false && quickStart.show.step2 == true && quickStart.show.step3 == false ) {

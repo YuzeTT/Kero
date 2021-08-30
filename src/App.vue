@@ -21,4 +21,17 @@ body {
   width: 100%;
   height: auto;
 }
+
+.rb_PushWork {
+  position: absolute;
+  right: 30px;
+  bottom: 30px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.qrcode_PushWork {
+  width: 100px;
+}
 </style>
