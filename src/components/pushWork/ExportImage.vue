@@ -50,7 +50,7 @@
       <br>
     </div>
     <div style="padding-top:0px">
-      <span style="font-size: 20px;color: black;">校验码：{{ work.ts }} <br>内容不一定准确，仅供参考；<br>如有错误/遗漏请以课堂布置为准！<br> Powered by k.uztt.cc</span>
+      <span style="font-size: 20px;color: black;">校验码：{{ work.ts }} <br>内容不一定准确，仅供参考；<br>如有错误/遗漏请以课堂布置为准！<br> Powered by 饶志伟</span>
       <span class="rb_PushWork">
         <span>了解此项目</span>
         <br>
