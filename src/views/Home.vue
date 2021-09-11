@@ -30,9 +30,9 @@
     <div class="footer">
       <a style="font-size:30px;color:#1A73E8" class="iconfont icon-GitHub" href="https://github.com/YuzeTT/Kero"></a>
       <br>
-      v0.1.1-alpha
+      v0.2.0-alpha
       <br>
-      Copyright ©2021 uzett.com. All rights reserved. 
+      Copyright ©2021 k.uztt.cc. All rights reserved. 
     </div>
   </div>
 </template>

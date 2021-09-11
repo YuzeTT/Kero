@@ -68,11 +68,11 @@
               sub-title="长按下方图片保存。"
             >
             </a-result>
-            <ExportImage ref="imageDom" class="exportImage" :date="quickStart.date" :works="quickStart.work" :sing="auth.sing"></ExportImage>
+            <EIColor ref="imageDom" class="exportImage" :date="quickStart.date" :works="quickStart.work" :sing="auth.sing"></EIColor>
             
             <div class="imageBox">
               <a-spin style="" v-show="quickStart.show.loadingImage" />
-              <img v-show="quickStart.show.image" :src="quickStart.imageUrl" alt="图片" class="imageShow" >
+              <img v-show="quickStart.show.image" :src="quickStart.imageUrl" alt="图片仍在生成中..." class="imageShow" >
             </div>
           </div>
           <a-divider/>
@@ -97,6 +97,11 @@
       </div>
     </div>
     <div style="padding:20px"></div>
+    <!-- <hr>
+    <ExportImage ref="imageDom" class="exportImageTmp" :date="quickStart.date" :works="quickStart.work" :sing="auth.sing"></ExportImage>
+    <hr>
+    <EIColor  ref="imageDom" class="exportImageTmp" :date="quickStart.date" :works="quickStart.work" :sing="auth.sing"/>
+    <hr> -->
     <!-- <ExportImage ref="imageDom" :date="quickStart.date" :works="quickStart.work" :sing="auth.sing"></ExportImage> -->
   </div>
 </template>
@@ -106,6 +111,7 @@ import { reactive, ref, onMounted, } from 'vue';
 import { ArrowRightOutlined, ArrowLeftOutlined, RollbackOutlined, SmileTwoTone } from '@ant-design/icons-vue';
 import html2canvas from 'html2canvas'
 import ExportImage from '../components/pushWork/ExportImage.vue'
+import EIColor from '../components/pushWork/EI-Color.vue'
 
 export default {
   components: {
@@ -113,7 +119,8 @@ export default {
     ArrowLeftOutlined,
     RollbackOutlined,
     SmileTwoTone,
-    ExportImage
+    ExportImage,
+    EIColor
   },
   setup() {
     onMounted(()=>{
@@ -298,6 +305,12 @@ export default {
   padding: 30px;
   top: -99999px;
   position: absolute;
+}
+.exportImageTmp {
+  width:600px;
+  padding: 30px;
+  /* top: -99999px; */
+  /* position: absolute; */
 }
 
 .imageBox {

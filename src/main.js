@@ -18,7 +18,12 @@ import {
   DatePicker,
   Select,
   InputNumber,
-  Spin
+  Spin,
+  Tag,
+  Breadcrumb,
+  Badge,
+  Timeline,
+  Alert
 } from 'ant-design-vue';
 import App from './App.vue'
 import './registerServiceWorker'
@@ -47,5 +52,10 @@ app.use(DatePicker)
 app.use(Select)
 app.use(InputNumber)
 app.use(Spin)
+app.use(Tag)
+app.use(Breadcrumb)
+app.use(Badge)
+app.use(Timeline)
+app.use(Alert)
 
 app.mount('#app')
